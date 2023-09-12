@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import Books from "./entities/Books";
+import Books from "./modules/Books";
 
 const app = new Elysia()
   .get("/", () => "Hello Elysia")

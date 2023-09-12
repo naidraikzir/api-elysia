@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "../../db";
-import { books } from "../../schema";
+import { db } from "$/db";
+import { books } from "$/schema";
 
 export interface Book {
   id: string;
