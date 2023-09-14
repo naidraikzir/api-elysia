@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "$/db";
-import { books } from "$/schema";
+import { books } from "./schema";
 
 export interface Book {
   id: string;
@@ -9,7 +9,8 @@ export interface Book {
 }
 
 export const BooksController = {
-  list: async () => await db.select().from(books),
+  list: async () =>
+    await db.select().from(books).orderBy(desc(books.timestamp)),
   get: async (id: string) =>
     await db.select().from(books).where(eq(books.id, id)),
   add: async (book: Book) => {
