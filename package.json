@@ -8,6 +8,8 @@
     "db:push": "drizzle-kit push:sqlite"
   },
   "dependencies": {
+    "@elysiajs/jwt": "^0.6.4",
+    "@elysiajs/swagger": "^0.6.2",
     "better-sqlite3": "^8.6.0",
     "drizzle-orm": "^0.28.6",
     "elysia": "latest"
