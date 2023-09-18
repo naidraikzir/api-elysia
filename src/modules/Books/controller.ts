@@ -13,36 +13,39 @@ export const BooksController = {
   list: () => db.select().from(books).orderBy(desc(books.timestamp)),
 
   get: async (id: string) => {
-    const book = await db.select().from(books).where(eq(books.id, id)).limit(1);
-    if (!book.length) {
+    const book = (await db.select().from(books).where(eq(books.id, id)))[0];
+    if (!book) {
       throw new NotFoundError();
     }
     return book;
   },
 
-  add: (book: Book) => {
+  add: async (book: Book) => {
     const id = crypto.randomUUID();
-    return db
-      .insert(books)
-      .values({ ...book, id })
-      .returning();
+    const inserted = (
+      await db
+        .insert(books)
+        .values({ ...book, id })
+        .returning()
+    )[0];
+    return inserted;
   },
 
   update: async (id: string, book: Book) => {
-    const updated = await db
-      .update(books)
-      .set(book)
-      .where(eq(books.id, id))
-      .returning();
-    if (!updated.length) {
+    const updated = (
+      await db.update(books).set(book).where(eq(books.id, id)).returning()
+    )[0];
+    if (!updated) {
       throw new NotFoundError();
     }
     return updated;
   },
 
   delete: async (id: string) => {
-    const deleted = await db.delete(books).where(eq(books.id, id)).returning();
-    if (!deleted.length) {
+    const deleted = (
+      await db.delete(books).where(eq(books.id, id)).returning()
+    )[0];
+    if (!deleted) {
       throw new NotFoundError();
     }
     return deleted;
