@@ -1,11 +1,11 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const books = sqliteTable("books", {
+export const users = sqliteTable("users", {
   id: text("id").primaryKey(),
-  name: text("name"),
-  author: text("author"),
+  username: text("username").unique(),
+  password: text("password"),
   timestamp: text("timestamp").default(sql`CURRENT_TIMESTAMP`),
 });
 
-export type Book = typeof books.$inferSelect
+export type User = typeof users.$inferSelect

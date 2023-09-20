@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
-import { BooksController, Book } from "./controller";
+import { add, del, get, list, update } from "./controller";
+import { Book } from "./schema";
 
 const schema = {
   body: t.Object({
@@ -10,13 +11,9 @@ const schema = {
 
 export default new Elysia().group("/books", (app) =>
   app
-    .get("/", () => BooksController.list())
-    .get("/:id", ({ params }) => BooksController.get(params.id))
-    .post("/", ({ body }) => BooksController.add(body as Book), schema)
-    .put(
-      "/:id",
-      ({ params, body }) => BooksController.update(params.id, body as Book),
-      schema
-    )
-    .delete("/:id", ({ params }) => BooksController.delete(params.id))
+    .get("/", list)
+    .get("/:id", ({ params }) => get(params.id))
+    .post("/", ({ body }) => add(body as Book), schema)
+    .put("/:id", ({ params, body }) => update(params.id, body as Book), schema)
+    .delete("/:id", ({ params }) => del(params.id))
 );
